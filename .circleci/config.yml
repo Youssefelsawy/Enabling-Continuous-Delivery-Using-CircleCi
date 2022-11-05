@@ -1,21 +1,17 @@
 version: 2.1
-# Use a package of configuration called an or
+
+workflows:
+  test-env-vars:
+    jobs:
+      - build
 
 jobs:
-  print_hello:
+  build:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/base:2020.01
     steps:
-      - run: echo hello
-  print_world:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - run: echo world
-workflows:
-  # Name the workflow "welcome"
-  welcome:
-    # Run the welcome/run job in its own container
-    jobs:
-      - print_hello
-      - print_world
+      - checkout
+      - run:
+          name: "echo an env var that is part of our project"
+          command: |
+            echo $name
