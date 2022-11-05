@@ -10,7 +10,7 @@ jobs:
     docker:
       - image: cimg/base:2020.01
     steps:
-      - checkout
+      - checkout 
       - run:
           name: "echo an env var that is part of our project"
           command: |
