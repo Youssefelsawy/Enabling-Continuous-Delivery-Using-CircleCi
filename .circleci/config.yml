@@ -1,5 +1,6 @@
 version: 2.1
-# Orchestrate or schedule a set of jobs
+# Use a package of configuration called an or
+
 jobs:
   print_hello:
     docker:
@@ -12,9 +13,9 @@ jobs:
     steps:
       - run: echo world
 workflows:
+  # Name the workflow "welcome"
   welcome:
+    # Run the welcome/run job in its own container
     jobs:
       - print_hello
-      - print_world:
-          requires:
-            - print_hello
+      - print_world
