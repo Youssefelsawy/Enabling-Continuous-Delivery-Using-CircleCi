@@ -2,17 +2,23 @@ version: 2.1
 
 commands:
   print_pipeline_id:
+    description: "Echo hello world"
+    parameters:
+      u2:
+        type: string
+        default: "Hello World"
     steps:
-      - run: echo ${CIRCLE_WORKFLOW_ID}
+      - run: echo <<parameters.u2>>
+
+workflows:
+  test-env-vars:
+    jobs:
+      - save_hello_world_output
 
 jobs:
-  my_job:
+  save_hello_world_output:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - print_pipeline_id 
-
-workflows:
-  my_workflow:
-    jobs:
-      - my_job
+      - print_pipeline_id:
+          u2: ${CIRCLE_WORKFLOW_ID}
