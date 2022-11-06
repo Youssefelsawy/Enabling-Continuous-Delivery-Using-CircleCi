@@ -21,4 +21,4 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - print_pipeline_id:
-          u2: ${CIRCLE_WORKFLOW_ID}
+          u2: <<pipeline.id>>
