@@ -13,7 +13,7 @@ commands:
            name: Destroy environment
            when: on_fail
            command: |
-             aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
+             aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7}
 jobs:
   create_infrastructure: 
         docker:
@@ -25,7 +25,7 @@ jobs:
               command: |
                 aws cloudformation deploy \
                   --template-file template.yml \
-                  --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+                  --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
                   --region us-east-1
 
   configure_infrastructure: 
@@ -45,6 +45,19 @@ jobs:
           command: |
             ansible-playbook -i inventory.yml main.yml
 
+  create_and_deploy_front_end:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Execute bucket.yml - Create Cloudformation Stack
+          command: |
+            aws cloudformation deploy \
+            --template-file bucket.yml \
+            --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
+            --parameter-overrides MyBucketName="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
+      - run: aws s3 sync . s3://mybucket-${CIRCLE_WORKFLOW_ID:0:7} --delete
   # Exercise: Smoke Testing
   smoke_test:
     docker:
