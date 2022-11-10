@@ -1,4 +1,8 @@
-
+Parameters:
+# Existing Bucket name
+PipelineID:
+  Description: Existing Bucket name
+  Type: String
 Resources:
     CloudFrontOriginAccessIdentity:
       Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
@@ -10,7 +14,7 @@ Resources:
       Properties:
         DistributionConfig:
           Origins:
-            - DomainName: !Sub "${CIRCLE_WORKFLOW_ID}.s3.amazonaws.com"
+            - DomainName: !Sub "mybucket-${CIRCLE_WORKFLOW_ID:0:7}.s3.amazonaws.com"
               Id: webpage
               S3OriginConfig:
                 OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
@@ -23,6 +27,6 @@ Resources:
             ViewerProtocolPolicy: allow-all
   Outputs:
     PipelineID:
-      Value: !Sub ${CIRCLE_WORKFLOW_ID}
+      Value: !Sub mybucket-${CIRCLE_WORKFLOW_ID:0:7}
       Export:
         Name: PipelineID
