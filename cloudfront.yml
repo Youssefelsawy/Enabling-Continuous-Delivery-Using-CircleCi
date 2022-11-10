@@ -1,4 +1,8 @@
-
+Parameters:
+# Existing Bucket name
+PipelineID:
+  Description: Existing Bucket name
+  Type: String
 Resources:
     CloudFrontOriginAccessIdentity:
       Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
@@ -10,7 +14,7 @@ Resources:
       Properties:
         DistributionConfig:
           Origins:
-            - DomainName: "mybucket-529690138077.s3.amazonaws.com"
+            - DomainName: !Sub "${PipelineID}.s3.amazonaws.com"
               Id: webpage
               S3OriginConfig:
                 OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
@@ -21,8 +25,8 @@ Resources:
               QueryString: False
             TargetOriginId: webpage
             ViewerProtocolPolicy: allow-all
-Outputs:
-  PipelineID:
-    Value: "mybucket-529690138077"
-    Export:
-      Name: PipelineID
+  Outputs:
+    PipelineID:
+      Value: !Sub ${PipelineID}
+      Export:
+        Name: PipelineID
