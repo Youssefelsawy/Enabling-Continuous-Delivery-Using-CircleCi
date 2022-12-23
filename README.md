@@ -4,7 +4,7 @@ Design an Ansible Playbook
 Control a Remote Machine with an Ansible Playbook
 Build an Ansible Inventory File
 Make Various Types of CD Jobs in our CI/CD Pipeline
-  #.#Create Infrastructure
+  .Create Infrastructure
   .Configure Infrastructure
   .Deploy Production Artifacts
   .Smoke Testing
