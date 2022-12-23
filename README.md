@@ -5,7 +5,7 @@
   
   Build an Ansible Inventory File
   
-  Make Various Types of CD Jobs in our CI/CD Pipeline
+  Make Various Types of CD Jobs to Deploy Frontend of an Application
   
     .Create Infrastructure
   
